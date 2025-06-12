@@ -1,0 +1,622 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Video Editor - ICON Studio Mönchengladbach</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: #000000;
+            color: #ffffff;
+            line-height: 1.6;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(circle at 20% 20%, rgba(255, 69, 0, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(255, 215, 0, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 40% 60%, rgba(255, 140, 0, 0.1) 0%, transparent 50%);
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header */
+        .header {
+            background: #000000;
+            padding: 80px 0 60px;
+            text-align: center;
+            border-bottom: 1px solid #333;
+        }
+
+        .header h1 {
+            font-size: clamp(3rem, 8vw, 8rem);
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: -2px;
+            margin-bottom: 20px;
+            background: linear-gradient(45deg, #FF4500, #FFD700, #FF8C00);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-shadow: 0 0 30px rgba(255, 69, 0, 0.5);
+            animation: glow 3s ease-in-out infinite alternate;
+        }
+
+        @keyframes glow {
+            from { filter: brightness(1); }
+            to { filter: brightness(1.2); }
+        }
+
+        .header .subtitle {
+            font-size: clamp(1.2rem, 3vw, 2rem);
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 4px;
+            opacity: 0.8;
+            margin-bottom: 40px;
+        }
+
+        .header .intro-text {
+            font-size: clamp(1.1rem, 2.5vw, 1.4rem);
+            max-width: 800px;
+            margin: 0 auto;
+            opacity: 0.9;
+            line-height: 1.8;
+        }
+
+        /* Main Content */
+        .content {
+            padding: 80px 0;
+        }
+
+        .section {
+            margin-bottom: 120px;
+        }
+
+        .section-title {
+            font-size: clamp(2.5rem, 6vw, 4rem);
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: -1px;
+            margin-bottom: 60px;
+            text-align: center;
+        }
+
+        .section-subtitle {
+            font-size: clamp(1.3rem, 3vw, 1.8rem);
+            font-weight: 600;
+            margin-bottom: 40px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        /* Benefits Grid */
+        .benefits-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 40px;
+            margin: 60px 0;
+        }
+
+        .benefit-card {
+            background: #111111;
+            border: 1px solid #333;
+            padding: 50px 40px;
+            transition: all 0.3s ease;
+        }
+
+        .benefit-card:hover {
+            border-color: #666;
+            background: #1a1a1a;
+        }
+
+        .benefit-card h3 {
+            font-size: clamp(1.5rem, 3vw, 2rem);
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 25px;
+        }
+
+        .benefit-card p {
+            font-size: clamp(1rem, 2.2vw, 1.2rem);
+            line-height: 1.8;
+            opacity: 0.9;
+        }
+
+        .highlight {
+            background: #1a1a1a;
+            border-left: 4px solid #ffffff;
+            padding: 30px;
+            margin: 30px 0;
+        }
+
+        .highlight p {
+            font-size: clamp(1.1rem, 2.5vw, 1.3rem);
+            font-weight: 500;
+            line-height: 1.8;
+        }
+
+        /* Tasks List */
+        .tasks-list {
+            list-style: none;
+            margin: 40px 0;
+        }
+
+        .tasks-list li {
+            background: #111111;
+            border: 1px solid #333;
+            padding: 30px;
+            margin-bottom: 20px;
+            font-size: clamp(1rem, 2.2vw, 1.2rem);
+            position: relative;
+            transition: all 0.3s ease;
+        }
+
+        .tasks-list li:hover {
+            border-color: #666;
+            background: #1a1a1a;
+        }
+
+        .tasks-list li::before {
+            content: "▶";
+            color: #ffffff;
+            font-weight: bold;
+            margin-right: 15px;
+        }
+
+        /* Calculator Section */
+        .calculator-section {
+            background: #111111;
+            border: 1px solid #333;
+            padding: 60px 40px;
+            margin: 80px 0;
+        }
+
+        .calculator-title {
+            font-size: clamp(2rem, 5vw, 3rem);
+            font-weight: 900;
+            text-transform: uppercase;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .calculator-description {
+            text-align: center;
+            font-size: clamp(1rem, 2.2vw, 1.2rem);
+            opacity: 0.8;
+            margin-bottom: 50px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .calculator-controls {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 40px;
+            margin: 50px 0;
+        }
+
+        .control-group {
+            background: #000000;
+            border: 1px solid #333;
+            padding: 30px;
+        }
+
+        .control-group label {
+            display: block;
+            font-size: clamp(1rem, 2.2vw, 1.2rem);
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 20px;
+        }
+
+        .slider {
+            width: 100%;
+            height: 4px;
+            background: #333;
+            outline: none;
+            -webkit-appearance: none;
+            margin: 20px 0;
+        }
+
+        .slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 20px;
+            height: 20px;
+            background: #ffffff;
+            cursor: pointer;
+        }
+
+        .slider::-moz-range-thumb {
+            width: 20px;
+            height: 20px;
+            background: #ffffff;
+            cursor: pointer;
+            border: none;
+        }
+
+        .value-display {
+            font-size: clamp(1.2rem, 2.8vw, 1.6rem);
+            font-weight: 700;
+            text-align: center;
+            margin: 15px 0;
+        }
+
+        /* Results Display */
+        .result-display {
+            background: #000000;
+            border: 2px solid #ffffff;
+            padding: 50px;
+            text-align: center;
+            margin: 50px 0;
+        }
+
+        .result-title {
+            font-size: clamp(1.5rem, 3.5vw, 2rem);
+            font-weight: 700;
+            text-transform: uppercase;
+            margin-bottom: 30px;
+        }
+
+        .big-number {
+            font-size: clamp(3rem, 8vw, 6rem);
+            font-weight: 900;
+            margin: 30px 0;
+        }
+
+        .earnings-breakdown {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 30px;
+            margin: 40px 0;
+        }
+
+        .earnings-item {
+            text-align: center;
+            padding: 20px;
+            border: 1px solid #333;
+        }
+
+        .earnings-item h4 {
+            font-size: clamp(0.9rem, 2vw, 1.1rem);
+            font-weight: 600;
+            text-transform: uppercase;
+            margin-bottom: 15px;
+            opacity: 0.8;
+        }
+
+        .earnings-item .amount {
+            font-size: clamp(1.5rem, 3.5vw, 2rem);
+            font-weight: 700;
+        }
+
+        /* Stats Section */
+        .stats-section {
+            background: #111111;
+            padding: 80px 40px;
+            text-align: center;
+            margin: 80px 0;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 60px;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .stat-item h3 {
+            font-size: clamp(3rem, 6vw, 5rem);
+            font-weight: 900;
+            margin-bottom: 15px;
+        }
+
+        .stat-item p {
+            font-size: clamp(1rem, 2.2vw, 1.2rem);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: 600;
+            opacity: 0.8;
+        }
+
+        /* CTA Section */
+        .cta-section {
+            background: #ffffff;
+            color: #000000;
+            padding: 80px 40px;
+            text-align: center;
+            margin-top: 80px;
+        }
+
+        .cta-section h2 {
+            font-size: clamp(2.5rem, 6vw, 4rem);
+            font-weight: 900;
+            text-transform: uppercase;
+            margin-bottom: 30px;
+        }
+
+        .cta-section p {
+            font-size: clamp(1.1rem, 2.5vw, 1.4rem);
+            max-width: 800px;
+            margin: 0 auto;
+            line-height: 1.8;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .container {
+                padding: 0 15px;
+            }
+
+            .header {
+                padding: 60px 0 40px;
+            }
+
+            .content {
+                padding: 60px 0;
+            }
+
+            .section {
+                margin-bottom: 80px;
+            }
+
+            .benefits-grid {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+
+            .benefit-card {
+                padding: 40px 30px;
+            }
+
+            .calculator-section {
+                padding: 40px 20px;
+            }
+
+            .calculator-controls {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+
+            .result-display {
+                padding: 40px 20px;
+            }
+
+            .stats-section {
+                padding: 60px 20px;
+            }
+
+            .cta-section {
+                padding: 60px 20px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .benefits-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .control-group {
+                padding: 20px;
+            }
+
+            .earnings-breakdown {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1>Video Editor</h1>
+            <p class="subtitle">ICON Studio Mönchengladbach</p>
+            <p class="intro-text">
+                Du bist kreativ, hast Skills in der Videobearbeitung und willst Teil von Deutschlands größter Rap-Casting-Show werden? Dann suchen wir DICH für unser Produktionsteam.
+            </p>
+        </header>
+
+        <main class="content">
+            <!-- Stats Section -->
+            <section class="stats-section">
+                <div class="stats-grid">
+                    <div class="stat-item">
+                        <h3>100Mio+</h3>
+                        <p>YouTube Views</p>
+                    </div>
+                    <div class="stat-item">
+                        <h3>200Mio+</h3>
+                        <p>Spotify Streams</p>
+                    </div>
+                    <div class="stat-item">
+                        <h3>1000+</h3>
+                        <p>Artists</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Mission Section -->
+            <section class="section">
+                <h2 class="section-title">Deine Mission</h2>
+                                 <ul class="tasks-list">
+                     <li><strong>Studio-Produktionen bearbeiten:</strong> Du erhältst Rohmaterial von unseren ICON-Sessions und machst daraus professionelle Inhalte für über 1 Million Zuschauer.</li>
+                     <li><strong>Direkter Artist-Zugang:</strong> Du hast direkten Zugang zu unseren Künstlern und dem Produktionsstudio - wirke aktiv an der Entstehung des Rohmaterials mit und gestalte den kreativen Prozess von Anfang an.</li>
+                     <li><strong>Multi-Platform Content:</strong> Erstelle Videos für YouTube (100Mio+ Views), TikTok Shorts und Instagram - jeder Clip repräsentiert die ICON-Qualität.</li>
+                     <li><strong>Show-Produktion:</strong> Du bist Teil der Postproduktion von Deutschlands größter Rap-Casting-Show.</li>
+                 </ul>
+            </section>
+
+            <!-- Benefits Section -->
+            <section class="section">
+                <h2 class="section-title">Was wir bieten</h2>
+                
+                <div class="benefits-grid">
+                    <div class="benefit-card">
+                        <h3>Festes Gehalt</h3>
+                        <p>Monatlich <strong>1.700 € netto</strong> - zuverlässig und pünktlich auf deinem Konto.</p>
+                    </div>
+
+                    <div class="benefit-card">
+                        <h3>Lebenslange Royalties</h3>
+                        <div class="highlight">
+                            <p>Du erhältst <strong>10% aller Spotify-Royalties</strong> der Songs, die während deiner Anstellung produziert werden. Diese Beteiligung bleibt <strong>lebenslang bestehen</strong> - auch nach einem möglichen Jobwechsel.</p>
+                        </div>
+                    </div>
+
+                                         <div class="benefit-card">
+                         <h3>Arbeitszeiten</h3>
+                         <p><strong>Montag-Freitag 10:00-17:00 Uhr</strong> - Perfekte Work-Life-Balance mit geregelten Zeiten und Wochenenden frei.</p>
+                     </div>
+
+                     <div class="benefit-card">
+                         <h3>Relocation Support</h3>
+                         <p>Ziehst du nach Mönchengladbach? Wir übernehmen <strong>2 Monate Airbnb-Kosten</strong> für deinen reibungslosen Start.</p>
+                     </div>
+                 </div>
+            </section>
+
+            <!-- Calculator Section -->
+            <section class="calculator-section">
+                <h2 class="calculator-title">Einkommens-Calculator</h2>
+                <p class="calculator-description">
+                    Berechne dein potenzielles monatliches Einkommen basierend auf unserer aktuellen Studioproduktion und realistischen Streaming-Zahlen.
+                </p>
+                
+                <div class="calculator-controls">
+                    <div class="control-group">
+                        <label for="songsPerMonth">Songs pro Monat:</label>
+                        <input type="range" id="songsPerMonth" class="slider" min="20" max="80" value="40">
+                        <div class="value-display" id="songsValue">40 Songs</div>
+                    </div>
+                    
+                    <div class="control-group">
+                        <label for="streamsPerSong">Streams pro Song:</label>
+                        <input type="range" id="streamsPerSong" class="slider" min="10000" max="200000" value="50000" step="5000">
+                        <div class="value-display" id="streamsValue">50,000 Streams</div>
+                    </div>
+                    
+                    <div class="control-group">
+                        <label for="monthsWorked">Monate gearbeitet:</label>
+                        <input type="range" id="monthsWorked" class="slider" min="1" max="24" value="12">
+                        <div class="value-display" id="monthsValue">12 Monate</div>
+                    </div>
+                </div>
+                
+                <div class="result-display">
+                    <h3 class="result-title">Dein monatliches Einkommen</h3>
+                    <div class="big-number" id="totalIncome">3,500 €</div>
+                    
+                    <div class="earnings-breakdown">
+                        <div class="earnings-item">
+                            <h4>Fixgehalt</h4>
+                            <div class="amount">1,700 €</div>
+                        </div>
+                        <div class="earnings-item">
+                            <h4>Royalties</h4>
+                            <div class="amount" id="royaltyAmount">1,800 €</div>
+                        </div>
+                        <div class="earnings-item">
+                            <h4>Songs produziert</h4>
+                            <div class="amount" id="totalSongs">480</div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Security Section -->
+            <section class="section">
+                <h2 class="section-title">Langfristige Sicherheit</h2>
+                <p style="font-size: clamp(1.1rem, 2.5vw, 1.4rem); text-align: center; max-width: 800px; margin: 0 auto; line-height: 1.8;">
+                    Die Royalty-Beteiligung bietet dir eine einzigartige Form der finanziellen Absicherung. Jeder Song, an dem du mitarbeitest, generiert dir lebenslang passives Einkommen - eine Investition in deine Zukunft.
+                </p>
+            </section>
+        </main>
+
+        <!-- CTA Section -->
+        <section class="cta-section">
+            <h2>Bereit für den nächsten Level?</h2>
+            <p>
+                Wenn du Teil von Deutschlands erfolgreichster Rap-Show werden willst und mit uns Content produzieren möchtest, der Millionen erreicht, dann bewirb dich jetzt. Werde Teil der ICON-Familie.
+            </p>
+        </section>
+    </div>
+
+    <script>
+        const songsSlider = document.getElementById('songsPerMonth');
+        const streamsSlider = document.getElementById('streamsPerSong');
+        const monthsSlider = document.getElementById('monthsWorked');
+        
+        const songsValue = document.getElementById('songsValue');
+        const streamsValue = document.getElementById('streamsValue');
+        const monthsValue = document.getElementById('monthsValue');
+        
+        const totalIncome = document.getElementById('totalIncome');
+        const royaltyAmount = document.getElementById('royaltyAmount');
+        const totalSongs = document.getElementById('totalSongs');
+        
+        function updateCalculator() {
+            const songs = parseInt(songsSlider.value);
+            const streams = parseInt(streamsSlider.value);
+            const months = parseInt(monthsSlider.value);
+            
+            // Update display values
+            songsValue.textContent = `${songs} Songs`;
+            streamsValue.textContent = `${streams.toLocaleString()} Streams`;
+            monthsValue.textContent = `${months} Monate`;
+            
+            // Calculate earnings (based on realistic Spotify payouts)
+            const payoutPerStream = 0.003; // €0.003 per stream
+            const royaltyPercentage = 0.10; // 10%
+            const fixedSalary = 1700; // €1,700
+            
+            // Total songs produced over all months
+            const totalSongsProduced = songs * months;
+            
+            // Monthly royalty income (cumulative effect)
+            const monthlyRoyalties = totalSongsProduced * streams * payoutPerStream * royaltyPercentage;
+            
+            // Total monthly income
+            const totalMonthlyIncome = fixedSalary + monthlyRoyalties;
+            
+            // Update displays
+            totalIncome.textContent = `${Math.round(totalMonthlyIncome).toLocaleString()} €`;
+            royaltyAmount.textContent = `${Math.round(monthlyRoyalties).toLocaleString()} €`;
+            totalSongs.textContent = `${totalSongsProduced.toLocaleString()}`;
+        }
+        
+        // Add event listeners
+        songsSlider.addEventListener('input', updateCalculator);
+        streamsSlider.addEventListener('input', updateCalculator);
+        monthsSlider.addEventListener('input', updateCalculator);
+        
+        // Initial calculation
+        updateCalculator();
+    </script>
+</body>
+</html> 
