@@ -530,7 +530,7 @@
                 
                 <div class="result-display">
                     <h3 class="result-title">Dein monatliches Einkommen</h3>
-                    <div class="big-number" id="totalIncome">4,900 €</div>
+                    <div class="big-number" id="totalIncome">3,100 €</div>
                     
                     <div class="earnings-breakdown">
                         <div class="earnings-item">
@@ -539,7 +539,7 @@
                         </div>
                         <div class="earnings-item">
                             <h4>Royalties</h4>
-                            <div class="amount" id="royaltyAmount">2,700 €</div>
+                            <div class="amount" id="royaltyAmount">900 €</div>
                         </div>
                         <div class="earnings-item">
                             <h4>Songs produziert</h4>
@@ -598,8 +598,39 @@
             // Total songs produced over all months
             const totalSongsProduced = songs * months;
             
-            // Monthly royalty income (cumulative effect)
-            const monthlyRoyalties = totalSongsProduced * streams * payoutPerStream * royaltyPercentage;
+            // Realistic streaming calculation with monthly decline
+            let totalMonthlyStreams = 0;
+            
+            for (let month = 1; month <= months; month++) {
+                let monthlyStreams = 0;
+                
+                // Calculate streams for all songs produced up to this month
+                for (let songMonth = 1; songMonth <= month; songMonth++) {
+                    const songAge = month - songMonth; // How many months old is this batch of songs
+                    let currentStreams = streams; // Initial streams per song
+                    
+                    // Apply 30% decline per month, but stabilize at 15% of original after 6 months
+                    if (songAge > 0) {
+                        for (let i = 0; i < songAge && i < 6; i++) {
+                            currentStreams *= 0.7; // 30% decline
+                        }
+                        // After 6 months, stabilize at 15% of original
+                        if (songAge >= 6) {
+                            currentStreams = streams * 0.15;
+                        }
+                    }
+                    
+                    monthlyStreams += currentStreams * songs; // songs per month
+                }
+                
+                totalMonthlyStreams += monthlyStreams;
+            }
+            
+            // Average monthly streams over the period
+            const avgMonthlyStreams = totalMonthlyStreams / months;
+            
+            // Monthly royalty income
+            const monthlyRoyalties = avgMonthlyStreams * payoutPerStream * royaltyPercentage;
             
             // Total monthly income
             const totalMonthlyIncome = fixedSalary + monthlyRoyalties;
