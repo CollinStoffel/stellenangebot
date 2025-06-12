@@ -485,7 +485,7 @@
                     <div class="benefit-card">
                         <h3>Lebenslange Royalties</h3>
                         <div class="highlight">
-                            <p>Du erhältst <strong>10% aller Spotify-Royalties</strong> der Songs, die während deiner Anstellung produziert werden. Diese Beteiligung bleibt <strong>lebenslang bestehen</strong> - auch nach einem möglichen Jobwechsel.</p>
+                            <p>Du erhältst <strong>5% aller Spotify-Royalties</strong> der Songs, die während deiner Anstellung produziert werden. Diese Beteiligung bleibt <strong>lebenslang bestehen</strong> - auch nach einem möglichen Jobwechsel.</p>
                         </div>
                     </div>
 
@@ -511,14 +511,14 @@
                 <div class="calculator-controls">
                     <div class="control-group">
                         <label for="songsPerMonth">Songs pro Monat:</label>
-                        <input type="range" id="songsPerMonth" class="slider" min="20" max="80" value="40">
-                        <div class="value-display" id="songsValue">40 Songs</div>
+                        <input type="range" id="songsPerMonth" class="slider" min="20" max="80" value="20">
+                        <div class="value-display" id="songsValue">20 Songs</div>
                     </div>
                     
                     <div class="control-group">
                         <label for="streamsPerSong">Streams pro Song:</label>
-                        <input type="range" id="streamsPerSong" class="slider" min="10000" max="200000" value="50000" step="5000">
-                        <div class="value-display" id="streamsValue">50,000 Streams</div>
+                        <input type="range" id="streamsPerSong" class="slider" min="10000" max="200000" value="30000" step="5000">
+                        <div class="value-display" id="streamsValue">30,000 Streams</div>
                     </div>
                     
                     <div class="control-group">
@@ -530,7 +530,7 @@
                 
                 <div class="result-display">
                     <h3 class="result-title">Dein monatliches Einkommen</h3>
-                    <div class="big-number" id="totalIncome">3,500 €</div>
+                    <div class="big-number" id="totalIncome">2,240 €</div>
                     
                     <div class="earnings-breakdown">
                         <div class="earnings-item">
@@ -543,11 +543,11 @@
                         </div>
                         <div class="earnings-item">
                             <h4>Royalties</h4>
-                            <div class="amount" id="royaltyAmount">1,800 €</div>
+                            <div class="amount" id="royaltyAmount">540 €</div>
                         </div>
                         <div class="earnings-item">
                             <h4>Songs produziert</h4>
-                            <div class="amount" id="totalSongs">480</div>
+                            <div class="amount" id="totalSongs">240</div>
                         </div>
                     </div>
                 </div>
@@ -596,7 +596,7 @@
             
             // Calculate earnings (based on realistic Spotify payouts)
             const payoutPerStream = 0.003; // €0.003 per stream
-            const royaltyPercentage = 0.10; // 10%
+            const royaltyPercentage = 0.05; // 5%
             const fixedSalary = 1700; // €1,700
             
             // Total songs produced over all months
